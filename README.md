@@ -1,6 +1,6 @@
-# Zwnj
+# ZW: Zero Width
 
-A golang package for detecting and handling zero width non-join runes.
+A golang package for detecting and handling zero width runes.
 
 ## License
 
