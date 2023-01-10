@@ -2,7 +2,15 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/prophittcorey/zw.svg)](https://pkg.go.dev/github.com/prophittcorey/zw)
 
-A golang package for detecting and handling zero width runes.
+A golang package for detecting and trimming zero width runes.
+
+## Why this package?
+
+Other packages exist for cleaning zero width characters, but most other
+packages work either on strings or bytes. The end result is a large number of
+unnecessary (and expensive) conversions from one type to another.
+
+This package was written with minimal memory reads, writes and copies in mind.
 
 ## Package Usage
 
