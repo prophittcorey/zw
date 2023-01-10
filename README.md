@@ -21,7 +21,7 @@ import (
   "github.com/prophittcorey/zw"
 )
 
-const (
+var (
     text = "Here's some text with \u200Brunes\uFEFF."
 
     bs = []byte(text)
