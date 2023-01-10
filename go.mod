@@ -1,3 +1,3 @@
-module github.com/prophittcorey/zwnj
+module github.com/prophittcorey/zw
 
 go 1.19
