@@ -21,23 +21,25 @@ const (
 )
 
 var (
-	replacer = strings.NewReplacer(string(ZWSP), empty, string(ZWNBSP), empty, string(ZWJ), empty, string(ZWNJ), empty)
+	/* default runes for Trim */
+	runes = []rune{ZWJ, ZWNJ, ZWSP, ZWNBSP}
 
-	runes = map[rune]struct{}{
+	/* use for O(1) lookups */
+	runemap = map[rune]struct{}{
 		ZWSP:   struct{}{},
 		ZWNBSP: struct{}{},
 		ZWJ:    struct{}{},
 		ZWNJ:   struct{}{},
 	}
+
+	replacer = strings.NewReplacer(string(ZWSP), empty, string(ZWNBSP), empty, string(ZWJ), empty, string(ZWNJ), empty)
 )
 
 // Trim removes the specified runes from the string. By default, removes
 // all zero width characters.
 func Trim(str string, rs ...rune) string {
 	if len(rs) == 0 {
-		for r := range runes {
-			rs = append(rs, r)
-		}
+		rs = runes
 	}
 
 	return replacer.Replace(str)
@@ -46,7 +48,7 @@ func Trim(str string, rs ...rune) string {
 // Present returns true if the string contains any zero width character.
 func Present(str string) bool {
 	for _, r := range str {
-		if _, ok := runes[r]; ok {
+		if _, ok := runemap[r]; ok {
 			return true
 		}
 	}
