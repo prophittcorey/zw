@@ -3,7 +3,6 @@ package zwnj
 import (
 	"bytes"
 	"io"
-	"strings"
 )
 
 const (
@@ -33,8 +32,6 @@ var (
 		ZWJ:    struct{}{},
 		ZWNJ:   struct{}{},
 	}
-
-	replacer = strings.NewReplacer(string(ZWSP), empty, string(ZWNBSP), empty, string(ZWJ), empty, string(ZWNJ), empty)
 )
 
 // Trim scans the reader and outputs a new slice of bytes containing only
