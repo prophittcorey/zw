@@ -1,5 +1,7 @@
 # ZW: Zero Width
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/prophittcorey/zw.svg)](https://pkg.go.dev/github.com/prophittcorey/zw)
+
 A golang package for detecting and handling zero width runes.
 
 ## Package Usage
