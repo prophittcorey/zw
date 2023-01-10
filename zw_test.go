@@ -1,4 +1,4 @@
-package zwnj
+package zw
 
 import (
 	"bytes"
