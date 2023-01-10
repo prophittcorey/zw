@@ -1,6 +1,7 @@
 package zwnj
 
 import (
+	"bytes"
 	"io"
 	"strings"
 )
@@ -36,27 +37,43 @@ var (
 	replacer = strings.NewReplacer(string(ZWSP), empty, string(ZWNBSP), empty, string(ZWJ), empty, string(ZWNJ), empty)
 )
 
-// Trim removes the specified runes from the string. By default, removes
-// all zero width characters.
-func Trim(str string, rs ...rune) string {
+// Trim scans the reader and outputs a new slice of bytes containing only
+// non-zero width runes.
+func Trim(rr io.RuneReader, rs ...rune) []byte {
 	if len(rs) == 0 {
 		rs = runes
 	}
 
-	return replacer.Replace(str)
-}
+	var buffer bytes.Buffer
 
-// Present returns true if any known zero width runes are present in the stream.
-func Present(rs io.RuneReader) bool {
 	for {
-		r, _, err := rs.ReadRune()
-
-		if _, ok := runemap[r]; ok {
-			return true
-		}
+		r, _, err := rr.ReadRune()
 
 		if err != nil {
 			break
+		}
+
+		if _, ok := runemap[r]; ok {
+			continue
+		}
+
+		buffer.WriteRune(r)
+	}
+
+	return buffer.Bytes()
+}
+
+// Present returns true if any known zero width runes are present in the stream.
+func Present(rr io.RuneReader) bool {
+	for {
+		r, _, err := rr.ReadRune()
+
+		if err != nil {
+			break
+		}
+
+		if _, ok := runemap[r]; ok {
+			return true
 		}
 	}
 

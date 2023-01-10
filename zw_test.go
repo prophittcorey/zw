@@ -52,9 +52,9 @@ func TestTrim(t *testing.T) {
 	}
 
 	for i, str := range given {
-		trimmed := Trim(str)
+		trimmed := Trim(strings.NewReader(str))
 
-		if trimmed != expect[i] {
+		if string(trimmed) != expect[i] {
 			t.Fatalf("failed to trim %s; got %s", str, trimmed)
 		}
 	}
