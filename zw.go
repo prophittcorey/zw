@@ -1,6 +1,7 @@
 package zwnj
 
 import (
+	"io"
 	"strings"
 )
 
@@ -45,11 +46,17 @@ func Trim(str string, rs ...rune) string {
 	return replacer.Replace(str)
 }
 
-// Present returns true if the string contains any zero width character.
-func Present(str string) bool {
-	for _, r := range str {
+// Present returns true if any known zero width runes are present in the stream.
+func Present(rs io.RuneReader) bool {
+	for {
+		r, _, err := rs.ReadRune()
+
 		if _, ok := runemap[r]; ok {
 			return true
+		}
+
+		if err != nil {
+			break
 		}
 	}
 

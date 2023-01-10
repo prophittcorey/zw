@@ -1,8 +1,11 @@
 package zwnj
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
-func TestPresence(t *testing.T) {
+func TestPresent(t *testing.T) {
 	given := []string{
 		"\u200Bfrom the start",
 		"at the end\u200D",
@@ -11,7 +14,7 @@ func TestPresence(t *testing.T) {
 	}
 
 	for _, str := range given {
-		if !Present(str) {
+		if !Present(strings.NewReader(str)) {
 			t.Fatalf("failed to detect zero width presence in %s", str)
 		}
 	}
@@ -23,7 +26,7 @@ func TestPresence(t *testing.T) {
 	}
 
 	for _, str := range given {
-		if Present(str) {
+		if Present(strings.NewReader(str)) {
 			t.Fatalf("falsely detected a zero width presence in %v", str)
 		}
 	}
