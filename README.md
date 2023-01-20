@@ -18,32 +18,36 @@ This package was written with minimal memory reads, writes and copies in mind.
 package main
 
 import (
-  "github.com/prophittcorey/zw"
+	"bytes"
+	"fmt"
+	"strings"
+
+	"github.com/prophittcorey/zw"
 )
 
 var (
-    text = "Here's some text with \u200Brunes\uFEFF."
+	text = "Here's some text with \u200Brunes\uFEFF."
 
-    bs = []byte(text)
+	bs = []byte(text)
 )
 
 func main() {
-  /* works on strings */
-  if zw.Present(strings.NewReader(text)) {
-    fmt.Println("It's true, the string contains zero width runes.")
-  }
+	/* works on strings */
+	if zw.Present(strings.NewReader(text)) {
+		fmt.Println("It's true, the string contains zero width runes.")
+	}
 
-  /* same code works on byte slices */
-  if zw.Present(bytes.NewReader(bs)) {
-    fmt.Println("It's true, the bytes contain zero width runes.")
-  }
+	/* same code works on byte slices */
+	if zw.Present(bytes.NewReader(bs)) {
+		fmt.Println("It's true, the bytes contain zero width runes.")
+	}
 
-  /* cleaning works much the same way */
-  cleaned := zw.Trim(strings.NewReader(text))
+	/* cleaning works much the same way */
+	cleaned := zw.Trim(strings.NewReader(text))
 
-  if string(cleaned) == "Here's some text with runes." {
-    fmt.Println("All zero width runes were removed.")
-  }
+	if string(cleaned) == "Here's some text with runes." {
+		fmt.Println("All zero width runes were removed.")
+	}
 }
 ```
 
